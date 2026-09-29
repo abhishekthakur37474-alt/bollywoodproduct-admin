@@ -1,0 +1,680 @@
+<?
+session_start();
+include "config.php";
+if($_SESSION['admin']==""){
+     header("location:index.php");
+      }
+      $id=$_GET["id"];
+      $record="select * from film_production_management_allot where id='$id'";
+      $exe=mysqli_query($con,$record);
+      $read=mysqli_fetch_array($exe);
+	     $film_id=$read["film_id"];
+
+      
+      ?>
+      
+<?
+if($_POST["edit_film_production_management"]) { 
+    
+    
+    $film_id= mysqli_real_escape_string($con,$_POST['film_id']);
+
+     $film_project_director_name= mysqli_real_escape_string($con,implode(",",$_POST['film_project_director_name']));
+    $film_project_executive_name= mysqli_real_escape_string($con,implode(",",$_POST['film_project_executive_name']));
+    $film_project_controller_name= mysqli_real_escape_string($con,implode(",",$_POST['film_project_controller_name']));
+
+    $film_production_supervisor_name= mysqli_real_escape_string($con,implode(",",$_POST['film_production_supervisor_name']));
+    $film_production_manager_name= mysqli_real_escape_string($con,implode(",",$_POST['film_production_manager_name'])); 
+    $film_production_controller_name= mysqli_real_escape_string($con,implode(",",$_POST['film_production_controller_name']));
+    $film_production_coordinator_name= mysqli_real_escape_string($con,implode(",",$_POST['film_production_coordinator_name']));
+    $film_production_assistant_name= mysqli_real_escape_string($con,implode(",",$_POST['film_production_assistant_name']));
+    $film_post_production_supervisor_name= mysqli_real_escape_string($con,implode(",",$_POST['film_post_production_supervisor_name']));
+    $assistant_production_manager= mysqli_real_escape_string($con,implode(",",$_POST['assistant_production_manager']));
+    $unit_production_manager= mysqli_real_escape_string($con,implode(",",$_POST['unit_production_manager']));
+    $production_stage_manager= mysqli_real_escape_string($con,implode(",",$_POST['production_stage_manager']));
+    $post_production_coordinator= mysqli_real_escape_string($con,implode(",",$_POST['post_production_coordinator']));
+    $project_manager= mysqli_real_escape_string($con,implode(",",$_POST['project_manager']));
+    $production_executive= mysqli_real_escape_string($con,implode(",",$_POST['production_executive']));
+    $production_secretary= mysqli_real_escape_string($con,implode(",",$_POST['production_secretary']));
+    $digital_production_manager= mysqli_real_escape_string($con,implode(",",$_POST['digital_production_manager']));
+    $digital_production_coordinator= mysqli_real_escape_string($con,implode(",",$_POST['digital_production_coordinator']));
+    $project_designer= mysqli_real_escape_string($con,implode(",",$_POST['project_designer']));
+     $prodution_head= mysqli_real_escape_string($con,implode(",",$_POST['prodution_head']));
+    $post_production_head= mysqli_real_escape_string($con,implode(",",$_POST['post_production_head']));
+
+
+
+
+    $film_makeup="update film_production_management_allot set film_id='$film_id',film_project_director_name='$film_project_director_name',film_project_executive_name='$film_project_executive_name',film_project_controller_name='$film_project_controller_name',film_production_supervisor_name='$film_production_supervisor_name',film_production_manager_name='$film_production_manager_name',film_production_controller_name='$film_production_controller_name',film_production_coordinator_name='$film_production_coordinator_name',film_production_assistant_name='$film_production_assistant_name',film_post_production_supervisor_name='$film_post_production_supervisor_name',assistant_production_manager='$assistant_production_manager',unit_production_manager='$unit_production_manager',production_stage_manager='$production_stage_manager',post_production_coordinator='$post_production_coordinator',project_manager='$project_manager',production_executive='$production_executive',production_secretary='$production_secretary',digital_production_manager='$digital_production_manager',digital_production_coordinator='$digital_production_coordinator',project_designer='$project_designer',prodution_head='$prodution_head',post_production_head='$post_production_head' where id='$id'";
+mysqli_query($con,$film_makeup) or die(mysqli_error($con));
+  
+         echo "<script>alert('Film Production Management Updated Succesfully')</script>";
+   echo "<script>window.location.href='film_production_management.php'</script>";
+         }
+         ?>
+         
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Edit Film Production Management</title>
+      <!-- Favicon and touch icons -->
+      <link rel="shortcut icon" href="assets/dist/img/ico/favicon.png" type="image/x-icon">
+      <!-- Start Global Mandatory Style
+         =====================================================================-->
+      <!-- jquery-ui css -->
+      <link href="assets/plugins/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
+      <!-- Bootstrap -->
+      <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+      <!-- Bootstrap rtl -->
+      <!--<link href="assets/bootstrap-rtl/bootstrap-rtl.min.css" rel="stylesheet" type="text/css"/>-->
+      <!-- Lobipanel css -->
+      <link href="assets/plugins/lobipanel/lobipanel.min.css" rel="stylesheet" type="text/css"/>
+      <!-- Pace css -->
+      <link href="assets/plugins/pace/flash.css" rel="stylesheet" type="text/css"/>
+      <!-- Font Awesome -->
+      <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+      <!-- Pe-icon -->
+      <link href="assets/pe-icon-7-stroke/css/pe-icon-7-stroke.css" rel="stylesheet" type="text/css"/>
+      <!-- Themify icons -->
+      <link href="assets/themify-icons/themify-icons.css" rel="stylesheet" type="text/css"/>
+      <!-- dataTables css -->
+      <link href="assets/plugins/datatables/dataTables.min.css" rel="stylesheet" type="text/css"/>
+            <!--textaera------css-->
+            <link href="/admin/richtext.min.css" rel="stylesheet" type="text/css"/>
+            <link href="/admin/site.css" rel="stylesheet" type="text/css"/>
+      <!-- End Global Mandatory Style
+         =====================================================================-->
+      <!-- Start Theme Layout Style
+         =====================================================================-->
+      <!-- Theme style -->
+      <link href="assets/dist/css/stylecrm.css" rel="stylesheet" type="text/css"/>
+
+     
+  <!-- select2 -->
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+ <style>
+     select
+     {
+         width:100%;
+     }
+     fieldset.scheduler-border {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+            box-shadow:  0px 0px 0px 0px #000;
+}
+
+    legend.scheduler-border {
+        font-size: 1.2em !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width:auto;
+        padding:0 10px;
+        border-bottom:none;
+    }
+ </style>
+
+   </head>
+   <body class="hold-transition sidebar-mini">
+   <!--preloader
+      <div id="preloader">
+         <div id="status"></div>
+      </div>-->
+      <!-- Site wrapper -->
+      <div class="wrapper">
+         <? include "topandleft.php"; ?>
+         <!-- =============================================== -->
+         <!-- Content Wrapper. Contains page content -->
+         <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+               <div class="header-icon">
+                  <i class="fa fa-users"></i>
+               </div>
+               <div class="header-title">
+                  <h1>Film Production Management</h1>
+                  <small>Edit Film Production</small>
+               </div>
+            </section>
+            <!-- Main content -->
+            <section class="content">
+
+ <div class="row">
+                  <!-- Form controls -->
+                  <div class="col-sm-12">
+                     <div class="panel panel-bd lobidrag">
+                      <div class="panel-heading">
+                           <div class="btn-group" id="buttonexport">
+                              <a href="#">
+                                 <h4>Edit Film Production Management Here</h4>
+                              </a>
+                           </div>
+                        </div>
+                        <div class="panel-body">
+                             <form method="post" enctype="multipart/form-data"  >
+          <div class="row">
+              <div class="col-lg-12">
+                  <div class="form-group">
+                                 <label>Select Film:</label>
+                               <select class="form-control searchwithselect2" id="film_id" name="film_id"  style="width:100%:"  required>
+                                     <?php 
+                                    
+                                    
+										 $film_data_query="select * from film where id='$film_id'";
+										 $film_data_exe=mysqli_query($con,$film_data_query);
+										 $film_name_read=mysqli_fetch_array($film_data_exe);
+                                     ?>
+								   <option value="<?php echo $film_name_read["id"];?>"><?php echo $film_name_read["name"];?></option>
+                                  <? $sqlfr=mysqli_query($con, "select * from film order by id desc");
+                                  
+                                  while($rowfr=mysqli_fetch_array($sqlfr)){ 
+                                    $main_lang=$rowfr['main_lang'];
+                                    $lang_q="select * from dubbing where id='$main_lang'";
+                                    $exe_main_lang=mysqli_query($con,$lang_q);
+                                    $read_lang=mysqli_fetch_array($exe_main_lang);
+                                    $lang_name=$read_lang['name'];
+                                    ?>
+
+<option value="<? echo $rowfr['id']; ?>"><? echo $rowfr['name']; ?> (Year:<? echo $rowfr['year_release']; ?> Language:<? echo $lang_name; ?>)</option>
+                                  <? } ?>
+                                 </select>
+                                  
+                             
+                             
+                             
+                              </div>
+                                <div class="form-group">
+                                 <label>Project Director</label>
+                             <select name="film_project_director_name[]" class="form-control searchwithselect2" style="width:100%;" multiple>
+                                  <?php 
+                                     $film_project_director_name=explode(",",$read["film_project_director_name"]);
+                                     foreach($film_project_director_name as $project_director_name){
+										 $project_director_name_data_query="select * from productionandmanagement where id='$project_director_name'";
+										 $project_director_name_data_exe=mysqli_query($con,$project_director_name_data_query);
+										 $project_director_name_data_read=mysqli_fetch_array($project_director_name_data_exe);
+                                     ?>
+                                     <option value="<?php echo $project_director_name_data_read['id'] ?>" selected><?php echo $project_director_name_data_read['name'];?></option>
+                                     <?php } ?>
+                                 
+                                  <? $sqlfr=mysqli_query($con, "select * from productionandmanagement order by name");
+                                  while($rowfr=mysqli_fetch_array($sqlfr)){ ?>
+
+<option value="<? echo $rowfr['id']; ?>"><? echo $rowfr['name']; ?> (ID:<? echo $rowfr['id']; ?> Nick Name:<? echo $rowfr['nickname']; ?>)</option>
+                                  <? } ?>
+                                 </select>
+                              </div>
+                               <div class="form-group">
+                                 <label>Project Designer</label>
+                             <select name="project_designer[]" class="form-control searchwithselect2" style="width:100%;" multiple>
+                                  <?php 
+                                     $project_designer=explode(",",$read["project_designer"]);
+                                     foreach($project_designer as $project_designer){
+										 $project_designer_data_query="select * from productionandmanagement where id='$project_designer'";
+										 $project_designer_data_exe=mysqli_query($con,$project_designer_data_query);
+										 $project_designer_data_read=mysqli_fetch_array($project_designer_data_exe);
+                                     ?>
+                                     <option value="<?php echo $project_designer_data_read['id'] ?>" selected><?php echo $project_designer_data_read['name'];?></option>
+                                     <?php } ?>
+                                 
+                                  <? $sqlfr=mysqli_query($con, "select * from productionandmanagement order by name");
+                                  while($rowfr=mysqli_fetch_array($sqlfr)){ ?>
+
+<option value="<? echo $rowfr['id']; ?>"><? echo $rowfr['name']; ?> (ID:<? echo $rowfr['id']; ?> Nick Name:<? echo $rowfr['nickname']; ?>)</option>
+                                  <? } ?>
+                                 </select>
+                              </div>
+ <div class="form-group">
+                                 <label>Project Executive</label>
+                             <select name="film_project_executive_name[]" class="form-control searchwithselect2" style="width:100%;" multiple>
+                                   <?php 
+                                     $film_project_executive_name=explode(",",$read["film_project_executive_name"]);
+                                     foreach($film_project_executive_name as $film_project_executive){
+										 $film_project_executive_query="select * from productionandmanagement where id='$film_project_executive'";
+										 $film_project_executive_data_exe=mysqli_query($con,$film_project_executive_query);
+										 $film_project_executive_read=mysqli_fetch_array($film_project_executive_data_exe);
+                                     ?>
+                                     <option value="<?php echo $film_project_executive_read['id'] ?>" selected><?php echo $film_project_executive_read['name'];?></option>
+                                     <?php } ?>
+                                  
+                                  
+                                  <? $sqlfr=mysqli_query($con, "select * from productionandmanagement order by name");
+                                  while($rowfr=mysqli_fetch_array($sqlfr)){ ?>
+
+<option value="<? echo $rowfr['id']; ?>"><? echo $rowfr['name']; ?> (ID:<? echo $rowfr['id']; ?> Nick Name:<? echo $rowfr['nickname']; ?>)</option>
+                                  <? } ?>
+                                 </select>
+                              </div>
+
+ <div class="form-group">
+                                 <label>Project Controller</label>
+                             <select name="film_project_controller_name[]" class="form-control searchwithselect2" style="width:100%;" multiple>
+                                  <?php 
+                                     $film_project_controller_name=explode(",",$read["film_project_controller_name"]);
+                                     foreach($film_project_controller_name as $film_project_controller){
+										 $film_project_controller_query="select * from productionandmanagement where id='$film_project_controller'";
+										 $film_project_controller_data_exe=mysqli_query($con,$film_project_controller_query);
+										 $film_project_controller_data_read=mysqli_fetch_array($film_project_controller_data_exe);
+                                     ?>
+                                     <option value="<?php echo $film_project_controller_data_read['id'] ?>" selected><?php echo $film_project_controller_data_read['name'];?></option>
+                                     <?php } ?> 
+                                 
+                                  <? $sqlfr=mysqli_query($con, "select * from productionandmanagement order by name");
+                                  while($rowfr=mysqli_fetch_array($sqlfr)){ ?>
+
+<option value="<? echo $rowfr['id']; ?>"><? echo $rowfr['name']; ?> (ID:<? echo $rowfr['id']; ?> Nick Name:<? echo $rowfr['nickname']; ?>)</option>
+                                  <? } ?>
+                                 </select>
+                              </div>
+                               <div class="form-group">
+                                 <label>Production Head</label>
+                             <select name="prodution_head[]" class="form-control searchwithselect2" style="width:100%;" multiple>
+                                  <?php 
+                                     $prodution_head=explode(",",$read["prodution_head"]);
+                                     foreach($prodution_head as $prodution_head){
+										 $prodution_head_data_query="select * from productionandmanagement where id='$prodution_head'";
+										 $prodution_head_data_exe=mysqli_query($con,$prodution_head_data_query);
+										 $prodution_head_data_read=mysqli_fetch_array($prodution_head_data_exe);
+                                     ?>
+                                     <option value="<?php echo $prodution_head_data_read['id'] ?>" selected><?php echo $prodution_head_data_read['name'];?></option>
+                                     <?php } ?>
+                                 
+                                  <? $sqlfr=mysqli_query($con, "select * from productionandmanagement order by name");
+                                  while($rowfr=mysqli_fetch_array($sqlfr)){ ?>
+
+<option value="<? echo $rowfr['id']; ?>"><? echo $rowfr['name']; ?> (ID:<? echo $rowfr['id']; ?> Nick Name:<? echo $rowfr['nickname']; ?>)</option>
+                                  <? } ?>
+                                 </select>
+                              </div>
+                              <div class="form-group">
+                                 <label>Production Controller</label>
+                             <select name="film_production_controller_name[]" class="form-control searchwithselect2" style="width:100%;" multiple>
+                                 <?php 
+                                     $film_production_controller_name=explode(",",$read["film_production_controller_name"]);
+                                     foreach($film_production_controller_name as $production_controller_name){
+										 $production_controller_name_data_query="select * from productionandmanagement where id='$production_controller_name'";
+										 $production_controller_name_data_exe=mysqli_query($con,$production_controller_name_data_query);
+										 $production_controller_name_name_read=mysqli_fetch_array($production_controller_name_data_exe);
+                                     ?>
+                                     <option value="<?php echo $production_controller_name_name_read['id'] ?>" selected><?php echo $production_controller_name_name_read['name'];?></option>
+                                     <?php } ?>
+                                  <? $sqlfr=mysqli_query($con, "select * from productionandmanagement order by name");
+                                  while($rowfr=mysqli_fetch_array($sqlfr)){ ?>
+
+<option value="<? echo $rowfr['id']; ?>"><? echo $rowfr['name']; ?> (ID:<? echo $rowfr['id']; ?> Nick Name:<? echo $rowfr['nickname']; ?>)</option>
+                                  <? } ?>
+                                 </select>
+                              </div>
+                                <div class="form-group">
+                                 <label>Production Supervisor</label>
+                             <select name="film_production_supervisor_name[]" class="form-control searchwithselect2" style="width:100%;" multiple>
+                              <?php 
+                                     $film_production_supervisor_name=explode(",",$read["film_production_supervisor_name"]);
+                                     foreach($film_production_supervisor_name as $film_production_supervisor_name1){
+									 $film_production_supervisor_name1_data_query="select * from productionandmanagement where id='$film_production_supervisor_name1'";
+										 $film_production_supervisor_name1_data_exe=mysqli_query($con,$film_production_supervisor_name1_data_query);
+										 $film_production_supervisor_name1_name_read=mysqli_fetch_array($film_production_supervisor_name1_data_exe);
+                                     ?>
+                                     <option value="<?php echo $film_production_supervisor_name1_name_read['id'] ?>" selected><?php echo $film_production_supervisor_name1_name_read['name'];?></option>
+                                     <?php } ?>
+                                  <? $sqlfr=mysqli_query($con, "select * from productionandmanagement order by name");
+                                  while($rowfr=mysqli_fetch_array($sqlfr)){ ?>
+
+<option value="<? echo $rowfr['id']; ?>"><? echo $rowfr['name']; ?> (ID:<? echo $rowfr['id']; ?> Nick Name:<? echo $rowfr['nickname']; ?>)</option>
+                                  <? } ?>
+                                 </select>
+                              </div>
+                              <div class="form-group">
+                                 <label>Production Manager</label>
+                             <select name="film_production_manager_name[]" class="form-control searchwithselect2" style="width:100%;" multiple>
+                              <?php 
+                                     $film_production_manager_name=explode(",",$read["film_production_manager_name"]);
+                                     foreach($film_production_manager_name as $film_production_manager_name1){
+									 $film_production_manager_name1_data_query="select * from productionandmanagement where id='$film_production_manager_name1'";
+										 $film_production_manager_name1_data_exe=mysqli_query($con,$film_production_manager_name1_data_query);
+										 $film_production_manager_name1_name_read=mysqli_fetch_array($film_production_manager_name1_data_exe);
+                                     ?>
+                                     <option value="<?php echo $film_production_manager_name1_name_read['id'] ?>" selected><?php echo $film_production_manager_name1_name_read['name'];?></option>
+                                     <?php } ?>
+                             
+
+                                  <? $sqlfr=mysqli_query($con, "select * from productionandmanagement order by name");
+                                  while($rowfr=mysqli_fetch_array($sqlfr)){ ?>
+
+<option value="<? echo $rowfr['id']; ?>"><? echo $rowfr['name']; ?> (ID:<? echo $rowfr['id']; ?> Nick Name:<? echo $rowfr['nickname']; ?>)</option>
+                                  <? } ?>
+                                 </select>
+                              </div>
+                              <div class="form-group">
+                                 <label>Assistant Production Manager</label>
+                             <select name="assistant_production_manager[]" class="form-control searchwithselect2" style="width:100%;" multiple>
+                                 <?php 
+                                     $assistant_production_manager=explode(",",$read["assistant_production_manager"]);
+                                     foreach($assistant_production_manager as $assistant_production_manager){
+										 $assistant_production_manager_data_query="select * from productionandmanagement where id='$assistant_production_manager'";
+										 $assistant_production_manager_data_exe=mysqli_query($con,$assistant_production_manager_data_query);
+										 $assistant_production_manager_name_read=mysqli_fetch_array($assistant_production_manager_data_exe);
+                                     ?>
+                                     <option value="<?php echo $assistant_production_manager_name_read['id'] ?>" selected><?php echo $assistant_production_manager_name_read['name'];?></option>
+                                     <?php } ?>
+                                  <? $sqlfr=mysqli_query($con, "select * from productionandmanagement order by name");
+                                  while($rowfr=mysqli_fetch_array($sqlfr)){ ?>
+
+<option value="<? echo $rowfr['id']; ?>"><? echo $rowfr['name']; ?> (ID:<? echo $rowfr['id']; ?> Nick Name:<? echo $rowfr['nickname']; ?>)</option>
+                                  <? } ?>
+                                 </select>
+                              </div>
+                               <div class="form-group">
+                                 <label>Unit Production Manager</label>
+                             <select name="unit_production_manager[]" class="form-control searchwithselect2" style="width:100%;" multiple>
+                                 <?php 
+                                     $unit_production_manager=explode(",",$read["unit_production_manager"]);
+                                     foreach($unit_production_manager as $unit_production_manager){
+										 $unit_production_manager_data_query="select * from productionandmanagement where id='$unit_production_manager'";
+										 $unit_production_manager_data_exe=mysqli_query($con,$unit_production_manager_data_query);
+										 $unit_production_manager_name_read=mysqli_fetch_array($unit_production_manager_data_exe);
+                                     ?>
+                                     <option value="<?php echo $unit_production_manager_name_read['id'] ?>" selected><?php echo $unit_production_manager_name_read['name'];?></option>
+                                     <?php } ?>
+                                  <? $sqlfr=mysqli_query($con, "select * from productionandmanagement order by name");
+                                  while($rowfr=mysqli_fetch_array($sqlfr)){ ?>
+
+<option value="<? echo $rowfr['id']; ?>"><? echo $rowfr['name']; ?> (ID:<? echo $rowfr['id']; ?> Nick Name:<? echo $rowfr['nickname']; ?>)</option>
+                                  <? } ?>
+                                 </select>
+                              </div>
+                              <div class="form-group">
+                                 <label>Production Stage Manager</label>
+                             <select name="production_stage_manager[]" class="form-control searchwithselect2" style="width:100%;" multiple>
+                                 <?php 
+                                     $production_stage_manager=explode(",",$read["production_stage_manager"]);
+                                     foreach($production_stage_manager as $production_stage_manager){
+										 $production_stage_manager_data_query="select * from productionandmanagement where id='$production_stage_manager'";
+										 $production_stage_manager_data_exe=mysqli_query($con,$production_stage_manager_data_query);
+										 $production_stage_manager_name_read=mysqli_fetch_array($production_stage_manager_data_exe);
+                                     ?>
+                                     <option value="<?php echo $production_stage_manager_name_read['id'] ?>" selected><?php echo $production_stage_manager_name_read['name'];?></option>
+                                     <?php } ?>
+                                  <? $sqlfr=mysqli_query($con, "select * from productionandmanagement order by name");
+                                  while($rowfr=mysqli_fetch_array($sqlfr)){ ?>
+
+<option value="<? echo $rowfr['id']; ?>"><? echo $rowfr['name']; ?> (ID:<? echo $rowfr['id']; ?> Nick Name:<? echo $rowfr['nickname']; ?>)</option>
+                                  <? } ?>
+                                 </select>
+                              </div>
+                            
+                               <div class="form-group">
+                                 <label>Production Coordinator</label>
+                             <select name="film_production_coordinator_name[]" class="form-control searchwithselect2" style="width:100%;" multiple>
+                                 <?php 
+                                     $film_production_coordinator_name=explode(",",$read["film_production_coordinator_name"]);
+                                     foreach($film_production_coordinator_name as $production_coordinator_name){
+										 $production_coordinator_name_data_query="select * from productionandmanagement where id='$production_coordinator_name'";
+										 $production_coordinator_name_data_exe=mysqli_query($con,$production_coordinator_name_data_query);
+										 $production_coordinator_name_name_read=mysqli_fetch_array($production_coordinator_name_data_exe);
+                                     ?>
+                                     <option value="<?php echo $production_coordinator_name_name_read['id'] ?>" selected><?php echo $production_coordinator_name_name_read['name'];?></option>
+                                     <?php } ?>
+                                  <? $sqlfr=mysqli_query($con, "select * from productionandmanagement order by name");
+                                  while($rowfr=mysqli_fetch_array($sqlfr)){ ?>
+
+<option value="<? echo $rowfr['id']; ?>"><? echo $rowfr['name']; ?> (ID:<? echo $rowfr['id']; ?> Nick Name:<? echo $rowfr['nickname']; ?>)</option>
+                                  <? } ?>
+                                 </select>
+                                   </div>
+                                   
+                                    <div class="form-group">
+                                 <label>Production Assistant</label>
+                             <select name="film_production_assistant_name[]" class="form-control searchwithselect2" style="width:100%;" multiple>
+                                 <?php 
+                                     $film_production_assistant_name=explode(",",$read["film_production_assistant_name"]);
+                                     foreach($film_production_assistant_name as $production_assistant_name){
+										  $production_assistant_name_data_query="select * from productionandmanagement where id='$production_assistant_name'";
+										 $production_assistant_name_data_exe=mysqli_query($con,$production_assistant_name_data_query);
+										 $production_assistant_name_name_read=mysqli_fetch_array($production_assistant_name_data_exe);
+                                     ?>
+                                     <option value="<?php echo $production_assistant_name_name_read['id'] ?>" selected><?php echo $production_assistant_name_name_read['name'];?></option>
+                                     <?php } ?>
+                                  <? $sqlfr=mysqli_query($con, "select * from productionandmanagement order by name");
+                                  while($rowfr=mysqli_fetch_array($sqlfr)){ ?>
+
+<option value="<? echo $rowfr['id']; ?>"><? echo $rowfr['name']; ?> (ID:<? echo $rowfr['id']; ?> Nick Name:<? echo $rowfr['nickname']; ?>)</option>
+                                  <? } ?>
+                                 </select>
+                                   </div>
+                                   <div class="form-group">
+                                 <label>Post Production Head</label>
+                             <select name="post_production_head[]" class="form-control searchwithselect2" style="width:100%;" multiple>
+                                  <?php 
+                                     $post_production_head=explode(",",$read["post_production_head"]);
+                                     foreach($post_production_head as $post_production_head){
+										 $post_production_head_data_query="select * from productionandmanagement where id='$post_production_head'";
+										 $post_production_head_data_exe=mysqli_query($con,$post_production_head_data_query);
+										 $post_production_head_data_read=mysqli_fetch_array($post_production_head_data_exe);
+                                     ?>
+                                     <option value="<?php echo $post_production_head_data_read['id'] ?>" selected><?php echo $post_production_head_data_read['name'];?></option>
+                                     <?php } ?>
+                                 
+                                  <? $sqlfr=mysqli_query($con, "select * from productionandmanagement order by name");
+                                  while($rowfr=mysqli_fetch_array($sqlfr)){ ?>
+
+<option value="<? echo $rowfr['id']; ?>"><? echo $rowfr['name']; ?> (ID:<? echo $rowfr['id']; ?> Nick Name:<? echo $rowfr['nickname']; ?>)</option>
+                                  <? } ?>
+                                 </select>
+                              </div>
+                                   <div class="form-group">
+                                 <label>Post Production Supervisor</label>
+                             <select name="film_post_production_supervisor_name[]" class="form-control searchwithselect2" style="width:100%;" multiple>
+                             <?php 
+                                     $film_post_production_supervisor_name=explode(",",$read["film_post_production_supervisor_name"]);
+                                     foreach($film_post_production_supervisor_name as $post_production_supervisor_name){
+										 $post_production_supervisor_name_data_query="select * from productionandmanagement where id='$post_production_supervisor_name'";
+										 $post_production_supervisor_name_data_exe=mysqli_query($con,$post_production_supervisor_name_data_query);
+										 $post_production_supervisor_name_name_read=mysqli_fetch_array($post_production_supervisor_name_data_exe);
+                                     ?>
+                                     <option value="<?php echo $post_production_supervisor_name_name_read['id'] ?>" selected><?php echo $post_production_supervisor_name_name_read['name'];?></option>
+                                     <?php } ?>
+                                  <? $sqlfr=mysqli_query($con, "select * from productionandmanagement order by name");
+                                  while($rowfr=mysqli_fetch_array($sqlfr)){ ?>
+
+<option value="<? echo $rowfr['id']; ?>"><? echo $rowfr['name']; ?> (ID:<? echo $rowfr['id']; ?> Nick Name:<? echo $rowfr['nickname']; ?>)</option>
+                                  <? } ?>
+                                 </select>
+                                   </div>
+                                   <div class="form-group">
+                                 <label>Post Production Coordinator</label>
+                             <select name="post_production_coordinator[]" class="form-control searchwithselect2" style="width:100%;" multiple>
+                                 <?php 
+                                     $post_production_coordinator=explode(",",$read["post_production_coordinator"]);
+                                     foreach($post_production_coordinator as $post_production_coordinator){
+										 $post_production_coordinator_data_query="select * from productionandmanagement where id='$post_production_coordinator'";
+										 $post_production_coordinator_data_exe=mysqli_query($con,$post_production_coordinator_data_query);
+										 $post_production_coordinator_name_read=mysqli_fetch_array($post_production_coordinator_data_exe);
+                                     ?>
+                                     <option value="<?php echo $post_production_coordinator_name_read['id'] ?>" selected><?php echo $post_production_coordinator_name_read['name'];?></option>
+                                     <?php } ?>
+                                  <? $sqlfr=mysqli_query($con, "select * from productionandmanagement order by name");
+                                  while($rowfr=mysqli_fetch_array($sqlfr)){ ?>
+
+<option value="<? echo $rowfr['id']; ?>"><? echo $rowfr['name']; ?> (ID:<? echo $rowfr['id']; ?> Nick Name:<? echo $rowfr['nickname']; ?>)</option>
+                                  <? } ?>
+                                 </select>
+                              </div>
+                                    <div class="form-group">
+                                 <label>Project Manager</label>
+                             <select name="project_manager[]" class="form-control searchwithselect2" style="width:100%;" multiple>
+                                 <?php 
+                                     $project_manager=explode(",",$read["project_manager"]);
+                                     foreach($project_manager as $project_manager){
+										 $project_manager_data_query="select * from productionandmanagement where id='$project_manager'";
+										 $project_manager_data_exe=mysqli_query($con,$project_manager_data_query);
+										 $project_manager_name_read=mysqli_fetch_array($project_manager_data_exe);
+                                     ?>
+                                     <option value="<?php echo $project_manager_name_read['id'] ?>" selected><?php echo $project_manager_name_read['name'];?></option>
+                                     <?php } ?>
+                                  <? $sqlfr=mysqli_query($con, "select * from productionandmanagement order by name");
+                                  while($rowfr=mysqli_fetch_array($sqlfr)){ ?>
+
+<option value="<? echo $rowfr['id']; ?>"><? echo $rowfr['name']; ?> (ID:<? echo $rowfr['id']; ?> Nick Name:<? echo $rowfr['nickname']; ?>)</option>
+                                  <? } ?>
+                                 </select>
+                              </div> 
+                                   <div class="form-group">
+                                 <label>Production Executive</label>
+                             <select name="production_executive[]" class="form-control searchwithselect2" style="width:100%;" multiple>
+                                 <?php 
+                                     $production_executive=explode(",",$read["production_executive"]);
+                                     foreach($production_executive as $production_executive){
+										 $production_executive_data_query="select * from productionandmanagement where id='$production_executive'";
+										 $production_executive_data_exe=mysqli_query($con,$production_executive_data_query);
+										 $production_executive_name_read=mysqli_fetch_array($production_executive_data_exe);
+                                     ?>
+                                     <option value="<?php echo $production_executive_name_read['id'] ?>" selected><?php echo $production_executive_name_read['name'];?></option>
+                                     <?php } ?>
+                                  <? $sqlfr=mysqli_query($con, "select * from productionandmanagement order by name");
+                                  while($rowfr=mysqli_fetch_array($sqlfr)){ ?>
+
+<option value="<? echo $rowfr['id']; ?>"><? echo $rowfr['name']; ?> (ID:<? echo $rowfr['id']; ?> Nick Name:<? echo $rowfr['nickname']; ?>)</option>
+                                  <? } ?>
+                                 </select>
+                              </div>
+                              <div class="form-group">
+                                 <label>Production Secretary</label>
+                             <select name="production_secretary[]" class="form-control searchwithselect2" style="width:100%;" multiple>
+                                 <?php 
+                                     $production_secretary=explode(",",$read["production_secretary"]);
+                                     foreach($production_secretary as $production_secretary){
+										 $production_secretary_data_query="select * from productionandmanagement where id='$production_secretary'";
+										 $production_secretary_data_exe=mysqli_query($con,$production_secretary_data_query);
+										 $production_secretary_name_read=mysqli_fetch_array($production_secretary_data_exe);
+                                     ?>
+                                     <option value="<?php echo $production_secretary_name_read['id'] ?>" selected><?php echo $production_secretary_name_read['name'];?></option>
+                                     <?php } ?>
+                                  <? $sqlfr=mysqli_query($con, "select * from productionandmanagement order by name");
+                                  while($rowfr=mysqli_fetch_array($sqlfr)){ ?>
+
+<option value="<? echo $rowfr['id']; ?>"><? echo $rowfr['name']; ?> (ID:<? echo $rowfr['id']; ?> Nick Name:<? echo $rowfr['nickname']; ?>)</option>
+                                  <? } ?>
+                                 </select>
+                              </div>
+                                 <div class="form-group">
+                                 <label>Digital Production Manager</label>
+                             <select name="digital_production_manager[]" class="form-control searchwithselect2" style="width:100%;" multiple>
+                                 <?php 
+                                     $digital_production_manager=explode(",",$read["digital_production_manager"]);
+                                     foreach($digital_production_manager as $digital_production_manager){
+										 $digital_production_manager_data_query="select * from productionandmanagement where id='$digital_production_manager'";
+										 $digital_production_manager_data_exe=mysqli_query($con,$digital_production_manager_data_query);
+										 $digital_production_manager_name_read=mysqli_fetch_array($digital_production_manager_data_exe);
+                                     ?>
+                                     <option value="<?php echo $digital_production_manager_name_read['id'] ?>" selected><?php echo $digital_production_manager_name_read['name'];?></option>
+                                     <?php } ?>
+                                  <? $sqlfr=mysqli_query($con, "select * from productionandmanagement order by name");
+                                  while($rowfr=mysqli_fetch_array($sqlfr)){ ?>
+
+<option value="<? echo $rowfr['id']; ?>"><? echo $rowfr['name']; ?> (ID:<? echo $rowfr['id']; ?> Nick Name:<? echo $rowfr['nickname']; ?>)</option>
+                                  <? } ?>
+                                 </select>
+                              </div>
+                                  <div class="form-group">
+                                 <label>Digital Production Coordinator</label>
+                             <select name="digital_production_coordinator[]" class="form-control searchwithselect2" style="width:100%;" multiple>
+                                 <?php 
+                                     $digital_production_coordinator=explode(",",$read["digital_production_coordinator"]);
+                                     foreach($digital_production_coordinator as $digital_production_coordinator){
+										 $digital_production_coordinator_data_query="select * from productionandmanagement where id='$digital_production_coordinator'";
+										 $digital_production_coordinator_data_exe=mysqli_query($con,$digital_production_coordinator_data_query);
+										 $digital_production_coordinator_name_read=mysqli_fetch_array($digital_production_coordinator_data_exe);
+                                     ?>
+                                     <option value="<?php echo $digital_production_coordinator_name_read['id'] ?>" selected><?php echo $digital_production_coordinator_name_read['name'];?></option>
+                                     <?php } ?>
+                                  <? $sqlfr=mysqli_query($con, "select * from productionandmanagement order by name");
+                                  while($rowfr=mysqli_fetch_array($sqlfr)){ ?>
+
+<option value="<? echo $rowfr['id']; ?>"><? echo $rowfr['name']; ?> (ID:<? echo $rowfr['id']; ?> Nick Name:<? echo $rowfr['nickname']; ?>)</option>
+                                  <? } ?>
+                                 </select>
+                              </div>
+     
+
+              </div>
+              
+          </div> 
+                         <div class="reset-button">
+
+                                   <input type="submit" name="edit_film_production_management"  class="btn btn-add"  value="Update Production Manegement">
+                            
+                              </div>
+        </form>  
+                </section>  
+            <!-- /.content -->
+         </div>
+          
+         <!-- /.content-wrapper -->
+       <?php include('footer.php');?>
+      </div>
+    
+  </div>
+  </div>
+  
+      <!-- ./wrapper -->
+      <!-- Start Core Plugins
+         =====================================================================-->
+      <!-- jQuery -->
+      <script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/plugins/jQuery/jquery-1.12.4.min.js" type="text/javascript"></script>
+      <!-- jquery-ui --> 
+      <script src="assets/plugins/jquery-ui-1.12.1/jquery-ui.min.js" type="text/javascript"></script>
+      <!-- Bootstrap -->
+      <script src="assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+      <!-- lobipanel -->
+      <script src="assets/plugins/lobipanel/lobipanel.min.js" type="text/javascript"></script>
+      <!-- Pace js -->
+      <script src="assets/plugins/pace/pace.min.js" type="text/javascript"></script>
+      <!-- table-export js -->
+      <script src="assets/plugins/table-export/tableExport.js" type="text/javascript"></script>
+      <script src="assets/plugins/table-export/jquery.base64.js" type="text/javascript"></script>
+      <script src="assets/plugins/table-export/html2canvas.js" type="text/javascript"></script>
+      <script src="assets/plugins/table-export/sprintf.js" type="text/javascript"></script>
+      <script src="assets/plugins/table-export/jspdf.js" type="text/javascript"></script>
+      <script src="assets/plugins/table-export/base64.js" type="text/javascript"></script>
+      <!-- dataTables js -->
+      <script src="assets/plugins/datatables/dataTables.min.js" type="text/javascript"></script>
+      <!-- SlimScroll -->
+      <script src="assets/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+      <!-- FastClick -->
+      <script src="assets/plugins/fastclick/fastclick.min.js" type="text/javascript"></script>
+      <!-- CRMadmin frame -->
+      <script src="assets/dist/js/custom.js" type="text/javascript"></script>
+      <!-- End Core Plugins
+         =====================================================================-->
+      <!-- Start Theme label Script
+         =====================================================================-->
+      <!-- Dashboard js -->
+      <script src="assets/dist/js/dashboard.js" type="text/javascript"></script>
+      <!-- End Theme label Script
+         =====================================================================-->
+         
+           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.css" integrity="sha512-p209YNS54RKxuGVBVhL+pZPTioVDcYPZPYYlKWS9qVvQwrlzxBxkR8/48SCP58ieEuBosYiPUS970ixAfI/w/A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.js" integrity="sha512-tvs4l2C3VPcCHzUU1KGG+jWWTO7H0stvk1jwn6pr4B1uimcL/2api3rnmkMhVQ6DglgxLcqyLSDS1IF5eyeTRg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   <script src="/admin/assets/bootstrap/js/jquery.richtext.js"></script>
+<script src="/admin/assets/bootstrap/js/jquery.richtext.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('.searchwithselect2').select2();
+});
+</script>
+
+
+
+ 
+   </body>
+  
+</html>
+

